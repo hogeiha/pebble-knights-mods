@@ -10,8 +10,12 @@ namespace UniversalKingActions
     {
         private static MethodBase TargetMethod()
         {
-            var stateMachineType = TypeFinder.Find("EvolutionUI+<ShowUIAsync>d__23");
-            return stateMachineType == null ? null : AccessTools.Method(stateMachineType, "MoveNext");
+            return TypeFinder.FindAsyncStateMachineMoveNext("EvolutionUI", "ShowUIAsync");
+        }
+
+        private static bool Prepare()
+        {
+            return TargetMethod() != null;
         }
 
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

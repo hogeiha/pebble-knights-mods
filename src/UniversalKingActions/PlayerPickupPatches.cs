@@ -13,6 +13,11 @@ namespace UniversalKingActions
             return TypeFinder.FindMethod("PlayerItemHolderController", "CheckCondition");
         }
 
+        private static bool Prepare()
+        {
+            return TargetMethod() != null;
+        }
+
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var networkServerType = TypeFinder.Find("Mirror.NetworkServer");
@@ -42,6 +47,11 @@ namespace UniversalKingActions
         private static MethodBase TargetMethod()
         {
             return TypeFinder.FindMethod("PlayerItemHolderController", "PickupItem");
+        }
+
+        private static bool Prepare()
+        {
+            return TargetMethod() != null;
         }
 
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

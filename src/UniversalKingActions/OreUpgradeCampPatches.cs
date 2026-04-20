@@ -11,6 +11,11 @@ namespace UniversalKingActions
             return TypeFinder.FindMethod("UpgradeCamp", "Awake");
         }
 
+        private static bool Prepare()
+        {
+            return TargetMethod() != null;
+        }
+
         private static bool Prefix(object __instance)
         {
             UpgradeCampHider.Hide(__instance);
@@ -24,6 +29,11 @@ namespace UniversalKingActions
         private static MethodBase TargetMethod()
         {
             return TypeFinder.FindMethod("UpgradeCamp", "Initialize");
+        }
+
+        private static bool Prepare()
+        {
+            return TargetMethod() != null;
         }
 
         private static bool Prefix(object __instance)
