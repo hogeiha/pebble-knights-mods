@@ -8,6 +8,7 @@ $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 $BuildDir = Join-Path $Root "dist\build"
 $LoaderOut = Join-Path $BuildDir "PebbleKnights.ModLoader.dll"
 $ModOut = Join-Path $BuildDir "CustomTraitFilter.dll"
+$KingActionsOut = Join-Path $BuildDir "UniversalKingActions.dll"
 $Csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
 
 if (!(Test-Path -LiteralPath $Csc)) {
@@ -33,10 +34,15 @@ foreach ($Path in $Required) {
     }
 }
 
+if (Test-Path -LiteralPath $BuildDir) {
+    Remove-Item -LiteralPath $BuildDir -Recurse -Force
+}
+
 New-Item -ItemType Directory -Force -Path $BuildDir | Out-Null
 
 $LoaderSources = Get-ChildItem -LiteralPath (Join-Path $Root "src\PebbleKnights.ModLoader") -Filter *.cs | ForEach-Object { $_.FullName }
 $ModSources = Get-ChildItem -LiteralPath (Join-Path $Root "src\CustomTraitFilter") -Filter *.cs | ForEach-Object { $_.FullName }
+$KingActionsSources = Get-ChildItem -LiteralPath (Join-Path $Root "src\UniversalKingActions") -Filter *.cs | ForEach-Object { $_.FullName }
 
 function Invoke-CscChecked {
     param([string[]]$Arguments)
@@ -77,6 +83,22 @@ $ModArgs = @(
 ) + $ModSources
 Invoke-CscChecked -Arguments $ModArgs
 
+$KingActionsArgs = @(
+    "/nologo",
+    "/target:library",
+    "/optimize+",
+    "/debug:pdbonly",
+    "/out:$KingActionsOut",
+    "/reference:$LoaderOut",
+    "/reference:$(Join-Path $BepCore "BepInEx.dll")",
+    "/reference:$(Join-Path $BepCore "0Harmony.dll")",
+    "/reference:$(Join-Path $Managed "UnityEngine.dll")",
+    "/reference:$(Join-Path $Managed "UnityEngine.CoreModule.dll")",
+    "/reference:$(Join-Path $Managed "netstandard.dll")"
+) + $KingActionsSources
+Invoke-CscChecked -Arguments $KingActionsArgs
+
 Write-Host "Built:"
 Write-Host "  $LoaderOut"
 Write-Host "  $ModOut"
+Write-Host "  $KingActionsOut"

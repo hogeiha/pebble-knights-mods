@@ -1,0 +1,10 @@
+{
+  "id": "universal_king_actions",
+  "name": "Universal King Actions",
+  "version": "0.1.0",
+  "author": "you",
+  "entry": "UniversalKingActions.UniversalKingActionsMod",
+  "description": "Lets every player use king-style pickup, throwing, and trait upgrade behavior while hiding the ore upgrade camp.",
+  "enabled": true,
+  "tags": ["gameplay", "player", "upgrade"]
+}

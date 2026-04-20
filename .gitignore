@@ -1,0 +1,9 @@
+dist/
+bin/
+obj/
+*.dll
+*.pdb
+*.log
+*.tmp
+*.zip
+BepInEx/
