@@ -1,0 +1,10 @@
+{
+  "id": "custom_trait_filter",
+  "name": "Custom Trait Filter",
+  "version": "0.1.0",
+  "author": "you",
+  "entry": "CustomTraitFilter.CustomTraitFilterMod",
+  "description": "Adds an in-game panel for enabling or disabling traits for the current run.",
+  "enabled": true,
+  "tags": ["trait", "ui"]
+}
